@@ -14,24 +14,16 @@ st.set_page_config( page_title='Environmental Impact of Food Production'
                   )
 
 # Load data:
-#@st.cache()
-#def load_data(path):
-#    data = pd.read_csv(path)
-#    return data
+@st.cache()
+def load_data(path):
+    data = pd.read_csv(path)
+    return data
   
-@st.cache(allow_output_mutation=True)
-def load_data(data_path, file_name):
-    dir_name = os.path.abspath(os.path.dirname(__file__))
-    location = os.path.join(data_path, file_name)
-    df = pd.read_csv(location)
-    return df  
-
-DATA_PATH = ("data") 
-  
-water_use = load_data(DATA_PATH, 'water_use.csv')
-production = load_data(DATA_PATH, 'productions.csv')
-ems_origin = load_data(DATA_PATH, 'emissions_with_origin.csv')
-ems_global = load_data(DATA_PATH, 'Global_emissions.csv')
+ 
+water_use = load_data('./data/water_use.csv')
+production = load_data('./data/productions.csv')
+ems_origin = load_data('./data/emissions_with_origin.csv')
+ems_global = load_data('./data/Global_emissions.csv')
 
 # Load food chain image:
 supply_chain = Image.open(os.path.join('assets', 'supply_chain.png'))
