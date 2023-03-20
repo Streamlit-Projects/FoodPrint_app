@@ -20,10 +20,10 @@ def load_data(path):
     return data
   
  
-water_use = load_data('/water_use.csv')
-production = load_data('/productions.csv')
-ems_origin = load_data('/emissions_with_origin.csv')
-ems_global = load_data('/Global_emissions.csv')
+water_use = load_data('FoodPrint_app/data/water_use.csv')
+production = load_data('FoodPrint_app/data/productions.csv')
+ems_origin = load_data('FoodPrint_app/data/emissions_with_origin.csv')
+ems_global = load_data('FoodPrint_app/data/Global_emissions.csv')
 
 # Load food chain image:
 supply_chain = Image.open(os.path.join('assets', 'supply_chain.png'))
