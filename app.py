@@ -26,7 +26,7 @@ def load_data(data_path, file_name):
     df = pd.read_csv(location)
     return df  
 
-DATA_PATH = "data"  
+DATA_PATH = ("data") 
   
 water_use = load_data(DATA_PATH, 'water_use.csv')
 production = load_data(DATA_PATH, 'productions.csv')
