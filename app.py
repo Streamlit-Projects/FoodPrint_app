@@ -4,8 +4,6 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 import os.path
-from streamlit_lottie import st_lottie
-import requests
 import plotly.express as px
 
 
@@ -28,27 +26,6 @@ ems_global = load_data('data/Global_emissions.csv')
 
 # Load food chain image:
 supply_chain = Image.open(os.path.join('assets', 'supply_chain.png'))
-
-# Load Lottie File:
-def load_lottieurl(url):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
-
-lottie_food = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_p1bmwqtk.json")
-
-# st_lottie(lottie_food, height = 350, key = 'food')
-
-# Define KPI(s):
-#land_use=int(ems_origin['Land use'].sum())
-#animal_feed=round(ems_origin['Animal feed'].mean(),1)
-#farm=':star:' * int(round(average_rating,0))
-#processing=round(emf_origin['Total'].mean(),2)
-#transport=
-#packaging=
-#retail=
-
 
 
 #------------------------------------------------------------------ SIDEBAR ------------------------------------------------------------
@@ -82,7 +59,7 @@ top10 = ems_origin.query("Origin==@origin").sort_values("Total_emissions")[-10:]
 top10 = ems_origin.query("Origin==@origin").sort_values("Total_emissions")[-10:]
 
 fig_bar_emissions = px.bar(top10
-                          , y='Food product'
+                          , y='Food_product'
                           , x='Total_emissions'
                            )
 fig_bar_emissions.update_layout(height=450,plot_bgcolor="rgba(0,0,0,0)")
@@ -91,19 +68,54 @@ st.plotly_chart(fig_bar_emissions)
 
 st.markdown("Comparing top animal and vegetal-based emmiter: Beef produces more than 3 times more emissions than dark chocolate!")
 
-st.markdown(" #### Environmental Impact & Production Map")
-st.markdown('Select product to find out impact from farm to fork. Emissions are measured as kg of CO2 per kg of product.')
+st.markdown(" #### Environmental Impact by Part of Supply Chain & Production Map")
 
 # Dropdown menu product_options:
-options = ems_origin.query("Origin==@origin")['Food product'].unique()
+options = ems_origin.query("Origin==@origin")['Food_product'].unique()
 product_options = st.selectbox('Select product:', options)
 
-#-----------------------------------------KPI's SPACE----------------------------------------
+#----------------------------------------- KPI's SPACE - START ----------------------------------------
 
+# Define KPI's:
+land_use = int(ems_origin.query("Origin==@origin & Food_product==@product_options").Land_use.sum())
+animal_feed = round(ems_origin.query("Origin==@origin & Food_product==@product_options").Animal_feed.mean(), 1)
+farm = round(ems_origin.query("Origin==@origin & Food_product==@product_options").Farm.sum(), 2)
+processing = (np.round(ems_origin.query("Origin==@origin & Food_product==@product_options").Processing.sum(), 2))
+transport = (np.round(ems_origin.query("Origin==@origin & Food_product==@product_options").Transport.sum(), 2))
+packaging = (np.round(ems_origin.query("Origin==@origin & Food_product==@product_options").Packaging.sum(), 2))
+retail = (np.round(ems_origin.query("Origin==@origin & Food_product==@product_options").Retail.sum(), 2))
 
+# Display KPI(s):
+st.markdown('##### Emissions by Supply Chain')
+st.markdown('Select product to find out impact from land to fork. Emissions are measured as kg of CO2 per kg of product.')
 
-#-----------------------------------------KPI's SPACE----------------------------------------
+st.markdown('___')
+col_1, col_2, col_3, col_4, col_5, col_6, col_7  = st.columns(7)
+with col_1:
+    st.markdown('###### Land Use')
+    st.markdown(f'{land_use:,}')
+with col_2:
+    st.markdown('###### Animal Feed')
+    st.markdown(f'{animal_feed}')
+with col_3:
+    st.markdown('###### Farm')
+    st.markdown(f'{farm}')
+with col_4:
+    st.markdown('###### Processing')
+    st.markdown(f'{processing}')
+with col_5:
+    st.markdown('###### Transport')
+    st.markdown(f'{transport}')
+with col_6:
+    st.markdown('###### Packaging')
+    st.markdown(f'{packaging}')
+with col_7:
+    st.markdown('###### Retail')
+    st.markdown(f'{retail}')
+st.markdown('___')
 
+#----------------------------------------- KPI's SPACE - END ----------------------------------------
+st.markdown('##### Production Map')
 st.markdown('Map provides an overview of worldwide production of selected food product in tonnes.')
 
 # Year slider:
