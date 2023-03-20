@@ -1,4 +1,4 @@
-Food product,Land use,Animal feed,Farm,Processing,Transport,Packaging,Retail,Total_emissions,Origin
+Food_product,Land_use,Animal_feed,Farm,Processing,Transport,Packaging,Retail,Total_emissions,Origin
 Apples,0.0,0.0,0.2,0.0,0.1,0.0,0.0,0.3,Vegetal
 Bananas,0.0,0.0,0.3,0.1,0.3,0.1,0.0,0.8,Vegetal
 Barley,0.0,0.0,0.2,0.1,0.0,0.5,0.3,1.1,Vegetal
