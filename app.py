@@ -19,7 +19,7 @@ st.set_page_config( page_title='Environmental Impact of Food Production'
 #    data = pd.read_csv(path)
 #    return data
   
-@st.cache(allow_output_mutation=True)
+@st.cache()
 def load_data(data_path, file_name):
     dir_name = os.path.abspath(os.path.dirname(__file__))
     location = os.path.join(data_path, file_name)
