@@ -19,10 +19,10 @@ def load_data(path):
     data = pd.read_csv(path)
     return data
 
-water_use = load_data('data/water_use.csv')
-production = load_data('data/productions.csv')
-ems_origin = load_data('data/emissions_with_origin.csv')
-ems_global = load_data('data/Global_emissions.csv')
+water_use = load_data('..data/water_use.csv')
+production = load_data('..data/productions.csv')
+ems_origin = load_data('..data/emissions_with_origin.csv')
+ems_global = load_data('..data/Global_emissions.csv')
 
 # Load food chain image:
 supply_chain = Image.open(os.path.join('assets', 'supply_chain.png'))
